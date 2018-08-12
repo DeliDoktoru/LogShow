@@ -1,0 +1,86 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+  <style>
+  #container{
+    color:aqua;
+    font-size: 12px;
+    margin: 20px 5px 50px 5px;
+  }
+  
+  </style>
+</head>
+
+<body class="card-action blue-grey darken-1">
+ 
+  <!-- Log -->
+  <div id="container">
+    
+  
+  </div>
+
+    <!-- Buttons -->
+    <a id="kapat" class="teal-text text-lighten-5 waves-effect lime darken-4 btn" 
+    style="bottom: 0;position: fixed;right:0;width: 75px;" onclick="kapatq()">Kapat</a>
+    <a id="res" class="teal-text text-lighten-5 waves-effect lime darken-4 btn" 
+    style="bottom: 0;position: fixed;right:75;" onclick="resq()">Res</a>
+ 
+  <script>  
+  document.documentElement.style.overflow = 'hidden'; 
+  let n=document.getElementById("container"); 
+ 
+
+  Tail = require('tail').Tail;
+		//LOG PATH		
+tail = new Tail("log path");
+tail.on("line", function(data) {
+  n.innerText+=data+"\n";
+  gobottom();
+});
+    let win = require('electron').remote.getCurrentWindow();
+    let kapat = document.getElementById('kapat');
+    let res = document.getElementById('res');
+    
+    kapat.addEventListener('mouseenter', () => {
+      win.setIgnoreMouseEvents(false);
+    });
+    kapat.addEventListener('mouseleave', () => {
+      win.setIgnoreMouseEvents(true, {
+        forward: true
+      });
+    });
+    res.addEventListener('mouseenter', () => {
+      win.setIgnoreMouseEvents(false);
+    });
+    res.addEventListener('mouseleave', () => {
+      win.setIgnoreMouseEvents(true, {
+        forward: true
+      });
+    });
+    let kapatq = () => {
+      const {
+        app
+      } = require('electron').remote;
+      app.quit();
+    };
+    let resq = () => {
+      const {
+        app
+      } = require('electron').remote;
+      app.relaunch();
+      app.quit()
+    };
+
+
+//sayfayı aşşağı çekme
+    function gobottom(){
+var documentHeight=document.documentElement.offsetHeight;
+var viewportHeight=window.innerHeight;
+window.scrollTo(0,documentHeight-viewportHeight);
+}
+  </script>
+</body>
+
+</html>
