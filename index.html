@@ -36,7 +36,7 @@
 		//LOG PATH		
 tail = new Tail("log path");
 tail.on("line", function(data) {
-  n.innerText=data+"\n";
+  n.innerText+=data+"\n";
   gobottom();
 });
     let win = require('electron').remote.getCurrentWindow();
